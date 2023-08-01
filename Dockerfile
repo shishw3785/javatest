@@ -11,5 +11,9 @@
 #RUN chmod +x /s6services/app/run
 
 
+
 FROM openjdk:8-jre
-java -jar -XX:MetaspaceSize=512m -XX:MaxMetaspaceSize=512m -Xms512m -Xmx512m -Xmn256m  -XX:SurvivorRatio=8 ./target/myproject-0.0.1-SNAPSHOT.jar  --server.port=8080 --spring.profiles.active="dev" --log.path="/data/logs/saas/eureka"  
+WORKDIR /work
+cp ./target/*.jar .
+RUN ls -al
+CMD java -jar -XX:MetaspaceSize=512m -XX:MaxMetaspaceSize=512m -Xms512m -Xmx512m -Xmn256m  -XX:SurvivorRatio=8 ./wort/myproject-0.0.1-SNAPSHOT.jar  --server.port=8080 --spring.profiles.active="dev" --log.path="/data/logs/saas/eureka"  
