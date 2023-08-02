@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chenkang-service
+  namespace: chenkang
+spec:
+  selector:
+    app: chenkangtestnginx
+  type: ClusterIP
+  ports:
+  - name: nginx
+    port: 80
+    targetPort: 80
