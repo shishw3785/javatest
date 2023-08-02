@@ -28,7 +28,7 @@ spec:
           image: 'harbor-test.office.demo.healthan.com.cn/javatest/javatest:java'
           ports:
             - name: metric-port
-              containerPort: 80
+              containerPort: 8080
               protocol: TCP
           env:
             - name: JAVA_OPTS
