@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: chenkangtestnginx
-          image: 'nginx'
+          image: 'harbor-test.office.demo.healthan.com.cn/javatest/javatest:java'
           ports:
             - name: metric-port
               containerPort: 80
