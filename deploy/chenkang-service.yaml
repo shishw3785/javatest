@@ -8,6 +8,6 @@ spec:
     app: chenkangtestnginx
   type: ClusterIP
   ports:
-  - name: nginx
-    port: 80
-    targetPort: 80
+  - name: chenkang-test
+    port: 8080
+    targetPort: 8080
