@@ -1,0 +1,90 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: chenkangtestnginx
+  namespace: chenkang
+  labels:
+    argocd.argoproj.io/instance: java-demo2
+    cicd: auto-genaration
+  annotations:
+    deployment.kubernetes.io/revision: '10'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chenkangtestnginx
+      cicd: auto-genaration
+      type: java
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: chenkangtestnginx
+        cicd: auto-genaration
+        type: java
+    spec:
+      containers:
+        - name: chenkangtestnginx
+          image: 'nginx'
+          ports:
+            - name: metric-port
+              containerPort: 80
+              protocol: TCP
+          env:
+            - name: JAVA_OPTS
+              value: >-
+                -javaagent:/opt/javaagent/prometheus/jmx_prometheus_javaagent-0.18.0.jar=8088:/opt/javaagent/prometheus/prometheus-jmx-config.yaml
+            - name: MY_POD_IP
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.podIP
+            - name: DDD
+              value: test
+          resources:
+            limits:
+              cpu: '1'
+              memory: 1G
+            requests:
+              cpu: 300m
+              memory: 1G
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 30
+            timeoutSeconds: 20
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 30
+            timeoutSeconds: 20
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 3
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /bin/sh
+                  - '-c'
+                  - >-
+                    ps -ef|grep java|grep -v grep| awk '{ print $2 }'| xargs
+                    -I{} kill 15 {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
