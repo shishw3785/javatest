@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: chenkangtest-svc
+  name: chenkangtest-maven-svc
   namespace: chenkang
 spec:
   selector:
