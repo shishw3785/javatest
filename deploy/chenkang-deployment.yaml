@@ -1,7 +1,7 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: chenkangtest-dep
+  name: chenkangtest-maven
   namespace: chenkang
   labels:
     argocd.argoproj.io/instance: java-demo2
