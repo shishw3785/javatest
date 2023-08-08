@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: chenkangtestnginx
-          image: 'harbor-test.office.demo.healthan.com.cn/javatest/java:test1'
+          image: '$REGISTRY/$DOCKERHUB_NAMESPACE/$APP_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER'
           ports:
             - name: metric-port
               containerPort: 8080
