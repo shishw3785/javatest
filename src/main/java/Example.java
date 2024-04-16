@@ -12,7 +12,7 @@ public class Example {
 
     @RequestMapping("/")
     String home() throws IOException {
-        fileWriterMethod("C:/Users/DELL/Desktop/data/logs", "哈喽,Java.");
+        fileWriterMethod("/data/logs/test.log", "哈喽,Java.");
         return "Hello World - v5!";
     }
 
